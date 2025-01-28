@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"os"
+)
+
 //ant struct
 //room struct
 
@@ -21,6 +26,14 @@ type link struct{
 	room_after *room
 }
 
+func readFile(fileName string) string{
+	contents, err := os.ReadFile(fileName)
+	if err != nil {
+		return err.Error()
+	}
+	return string(contents)
+}
+
 func main(){
-	
+	fmt.Println(readFile("example.txt"))
 }

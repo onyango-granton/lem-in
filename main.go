@@ -47,6 +47,17 @@ func getLinks(fileName string) []string{
 	return links
 }
 
+func buildGraph(routes []string) map[string][]string{
+	graph := make(map[string][]string)
+	for _, route := range routes{
+		route := strings.Split(route, "-")
+		src, dest := route[0], route[1]
+		graph[src] = append(graph[src], dest)
+	}
+	return graph
+}
+
 func main(){
-	fmt.Println(getLinks("example.txt"))
+	// fmt.Println(getLinks("example.txt"))
+	fmt.Println(buildGraph(getLinks("example.txt")))
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 //ant struct
@@ -34,6 +35,18 @@ func readFile(fileName string) string{
 	return string(contents)
 }
 
+func getLinks(fileName string) []string{
+	var links []string
+	rooms := strings.Split(readFile(fileName), string(rune(10)))
+	for _,ch := range rooms{
+		if strings.Contains(ch, "-"){
+			links = append(links, ch)
+		}
+	}
+
+	return links
+}
+
 func main(){
-	fmt.Println(readFile("example.txt"))
+	fmt.Println(getLinks("example.txt"))
 }

@@ -32,12 +32,14 @@ func ParseInput(filename string) (Farm, error){
 		}
 
 		if farm.Ants == 0{
+			//obtaining ants number given they should be parsed in line 1 of file
 			ants, err := strconv.Atoi(line)
 			if err != nil {
 				return Farm{}, fmt.Errorf("invalid ant count: %v",err)
 			}
 			farm.Ants = ants
 		}else if strings.Contains(line, " "){
+			// obtaining rooms given thay are uniquely identified with spaces
 			parts := strings.Split(line, " ")
 			room := parts[0]
 			farm.Rooms = append(farm.Rooms, room)
@@ -49,6 +51,7 @@ func ParseInput(filename string) (Farm, error){
 				isEnd = false
 			}
 		} else if strings.Contains(line, "-"){
+			//obtaining links given thay are uniquely identified with "hyphen"
 			farm.Links = append(farm.Links, line)
 			parts := strings.Split(line, "-")
 			farm.AdjList[parts[0]] = append(farm.AdjList[parts[0]], parts[1])

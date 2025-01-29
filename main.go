@@ -73,4 +73,11 @@ func findRoutes(graph map[string][]string,current, end string, pathRoute []strin
 func main(){
 	// fmt.Println(getLinks("example.txt"))
 	fmt.Println(buildGraph(getLinks("example.txt")))
+
+	var allPaths [][]string
+	findRoutes(buildGraph(getLinks("example.txt")),"start", "end", []string{}, &allPaths)
+
+	for _,path := range allPaths{
+		fmt.Println(path)
+	}
 }

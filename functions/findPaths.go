@@ -1,9 +1,13 @@
 package functions
 
-func BFS(adjList map[string][]string, start, end string) []string {
+import "fmt"
+
+func BFS(adjList map[string][]string, start, end string) [][]string {
+	fmt.Println("HERE", adjList)
 	queue  := [][]string{{start}}
 	visited := make(map[string]bool)
 	visited[start] = true
+	var allPaths [][]string
 
 	for len(queue) > 0{
 		path := queue[0]
@@ -11,7 +15,8 @@ func BFS(adjList map[string][]string, start, end string) []string {
 		lastRoom := path[len(path)-1]
 
 		if lastRoom == end{
-			return path
+			allPaths = append(allPaths, path)
+			continue
 		}
 
 		for _, neighbor := range adjList[lastRoom]{
@@ -26,5 +31,5 @@ func BFS(adjList map[string][]string, start, end string) []string {
 			}
 		}
 	}
-	return nil
+	return allPaths
 }

@@ -16,5 +16,9 @@ func main(){
 	}
 	path := functions.BFS(adjList, "A","F")
 
+	paths := [][]string{{"A","B","C"},{"A","D","E","C"},{"A","G","H","F","C"}}
+
+	fmt.Println(functions.AllocateAnts(paths, 6))
+
 	fmt.Println(path)
 }

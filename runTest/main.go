@@ -2,40 +2,97 @@ package main
 
 import (
 	"fmt"
+
 	"lem-in/functions"
 )
 
-// func main(){
-// 	adjList := map[string][]string{
-// 		"A": {"B", "C"},
-// 		"B": {"A","D","E"},
-// 		"C":{"A","F"},
-// 		"D":{"B"},
-// 		"E":{"B","F"},
-// 		"F":{"C","E"},
-// 	}
-// 	path := functions.BFS(adjList, "A","F")
-
-// 	paths := [][]string{{"A","B","C"},{"A","D","E","C"},{"A","G","H","F","C"}}
-
-// 	fmt.Println(functions.AllocateAnts(paths, 6))
-
-// 	fmt.Println(path)
-// }
-
 func main() {
-	farm, err := functions.ParseInput("../example.txt")
+	farm, err := functions.ParseInput("example.txt")
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	path := functions.BFS(farm.AdjList, farm.Start, farm.End)
-	if path == nil{
-		fmt.Println("No path found")
+	// Call DFS to find all paths
+	allPaths := DFS(farm.AdjList, farm.Start, farm.End)
+	if len(allPaths) == 0 {
+		fmt.Println("No paths found")
 		return
 	}
 
-	antsPerPath := functions.AllocateAnts([][]string{path}, farm.Ants)
-	functions.SimulateAnts([][]string{path}, antsPerPath)
+	// Print all paths
+	for _, path := range allPaths {
+		fmt.Println(path)
+	}
+
+	allocatedAnts,_ := functions.AllocateAnts(allPaths, farm.Ants)
+	functions.SimulateAnts(allPaths, allocatedAnts)
+}
+
+// DFS function to find all paths from start to end
+func DFS(adjList map[string][]string, start, end string) [][]string {
+	visited := make(map[string]bool) // Track visited rooms to avoid cycles
+	var allPaths [][]string          // Store all valid paths
+	var currentPath []string         // Track the current path being explored
+
+	// Recursive DFS helper function
+	var dfsHelper func(node string)
+	dfsHelper = func(node string) {
+		// Mark the current node as visited and add it to the current path
+		visited[node] = true
+		currentPath = append(currentPath, node)
+
+		// If the current node is the end, add the current path to allPaths
+		if node == end {
+			// Make a copy of the current path to avoid overwriting
+			pathCopy := make([]string, len(currentPath))
+			copy(pathCopy, currentPath)
+			allPaths = append(allPaths, pathCopy)
+		} else {
+			// Explore all neighbors of the current node
+			for _, neighbor := range adjList[node] {
+				if !visited[neighbor] {
+					dfsHelper(neighbor)
+				}
+			}
+		}
+
+		// Backtrack: Remove the current node from the path and mark it as unvisited
+		currentPath = currentPath[:len(currentPath)-1]
+		visited[node] = false
+	}
+
+	// Start DFS from the start node
+	dfsHelper(start)
+
+	return allPaths
+}
+
+
+func SimulateAnts(){
+	farm, err := functions.ParseInput("example.txt")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Call DFS to find all paths
+	allPaths := DFS(farm.AdjList, farm.Start, farm.End)
+	if len(allPaths) == 0 {
+		fmt.Println("No paths found")
+		return
+	}
+
+	// Print all paths
+	for _, path := range allPaths {
+		fmt.Println(path)
+	}
+
+	allocatedAnts,paths := functions.AllocateAnts(allPaths, farm.Ants)
+
+	for _, ch := range allocatedAnts{
+		for ant:=0; ant<ch; ant++{
+			
+		}
+	}
 }

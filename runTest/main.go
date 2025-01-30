@@ -27,6 +27,7 @@ func main() {
 
 	allocatedAnts,_ := functions.AllocateAnts(allPaths, farm.Ants)
 	functions.SimulateAnts(allPaths, allocatedAnts)
+	SimulateAnts()
 }
 
 // DFS function to find all paths from start to end
@@ -89,10 +90,12 @@ func SimulateAnts(){
 	}
 
 	allocatedAnts,paths := functions.AllocateAnts(allPaths, farm.Ants)
-
-	for _, ch := range allocatedAnts{
+	antID := 0
+	for i, ch := range allocatedAnts{
+		
 		for ant:=0; ant<ch; ant++{
-			
+			antID++
+			fmt.Printf("L%d-path%v\n", antID,paths[i])
 		}
 	}
 }

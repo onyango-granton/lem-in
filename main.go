@@ -2,82 +2,24 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strings"
+
+	"lem-in/functions"
 )
 
-//ant struct
-//room struct
-
-type ant struct{
-	ant_number int
-	roomsVisited *[]room
-}
-
-type room struct{
-	name string
-	coord_x int
-	coord_y int
-	roomLink *link
-	visited bool
-}
-
-type link struct{
-	room_before *room
-	room_after *room
-}
-
-func readFile(fileName string) string{
-	contents, err := os.ReadFile(fileName)
+func main() {
+	farm, err := functions.ParseInput("example2.txt")
 	if err != nil {
-		return err.Error()
-	}
-	return string(contents)
-}
-
-func getLinks(fileName string) []string{
-	var links []string
-	rooms := strings.Split(readFile(fileName), string(rune(10)))
-	for _,ch := range rooms{
-		if strings.Contains(ch, "-"){
-			links = append(links, ch)
-		}
-	}
-
-	return links
-}
-
-func buildGraph(routes []string) map[string][]string{
-	graph := make(map[string][]string)
-	for _, route := range routes{
-		route := strings.Split(route, "-")
-		src, dest := route[0], route[1]
-		graph[src] = append(graph[src], dest)
-	}
-	return graph
-}
-
-func findRoutes(graph map[string][]string,current, end string, pathRoute []string, allPath *[][]string){
-	pathRoute = append(pathRoute, current)
-
-	if current == end{
-		*allPath = append(*allPath, append([]string{}, pathRoute...))
+		fmt.Println(err.Error())
 		return
 	}
 
-	for _, neighbor := range graph[current]{
-		findRoutes(graph, neighbor, end, pathRoute, allPath)
+	// Call DFS to find all paths
+	allPaths := functions.FindPathsDFS(farm.AdjList, farm.Start, farm.End)
+	if len(allPaths) == 0 {
+		fmt.Println("No paths found")
+		return
 	}
-}
 
-func main(){
-	// fmt.Println(getLinks("example.txt"))
-	fmt.Println(buildGraph(getLinks("example.txt")))
-
-	var allPaths [][]string
-	findRoutes(buildGraph(getLinks("example.txt")),"start", "end", []string{}, &allPaths)
-
-	for _,path := range allPaths{
-		fmt.Println(path)
-	}
+	allocatedAnts := functions.AllocateAnts(allPaths, farm.Ants)
+	functions.SimulateAnts(allPaths, allocatedAnts)
 }

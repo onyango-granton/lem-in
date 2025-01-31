@@ -1,7 +1,7 @@
 package functions
 
 // DFS function to find all paths from start to end
-func DFS(adjList map[string][]string, start, end string) [][]string {
+func FindPathsDFS(adjList map[string][]string, start, end string) [][]string {
 	visited := make(map[string]bool) // Track visited rooms to avoid cycles
 	var allPaths [][]string          // Store all valid paths
 	var currentPath []string         // Track the current path being explored

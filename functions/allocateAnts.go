@@ -1,8 +1,6 @@
 package functions
 
-import "fmt"
-
-func AllocateAnts(paths [][]string, ants int) ([]int,[][]string) {
+func AllocateAnts(paths [][]string, ants int) ([]int) {
 	antsPerPath := make([]int, len(paths))
 	pathLengths := make([]int, len(paths))
 
@@ -10,18 +8,18 @@ func AllocateAnts(paths [][]string, ants int) ([]int,[][]string) {
 		pathLengths[i] = len(path)
 	}
 
-	for i := 0; i < ants; i++{
+	for i := 0; i < ants; i++ {
 		minIndex := 0
-		minValue := antsPerPath[0]+pathLengths[0]
+		minValue := antsPerPath[0] + pathLengths[0]
 
-		for j:=0; j < len(paths); j++{
-			if antsPerPath[j]+pathLengths[j] < minValue{
+		for j := 0; j < len(paths); j++ {
+			if antsPerPath[j]+pathLengths[j] < minValue {
 				minIndex = j
 				minValue = antsPerPath[j] + pathLengths[j]
 			}
 		}
 		antsPerPath[minIndex]++
 	}
-	fmt.Println(antsPerPath, paths)
-	return antsPerPath, paths
+
+	return antsPerPath
 }

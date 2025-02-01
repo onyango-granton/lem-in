@@ -55,4 +55,3 @@ LinkedIn: [Granton Onyango](https://www.linkedin.com/in/granton-onyango-298ba621
 
 ## License
 This project is licensed under the [GNU_License](LICENSE).
-

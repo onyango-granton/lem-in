@@ -1,11 +1,11 @@
 # Lem-in
 
 ## Overview
-Lem-in is a pathfinding algorithm project from **School 42**, where the goal is to efficiently move ants from a **start room** to an **end room** through a network of interconnected rooms and tunnels. The challenge is to optimize the movement to achieve the minimum number of steps.
+Lem-in is a pathfinding algorithm project from [**Zone01**](https://www.zone01kisumu.ke/), where the goal is to efficiently move ants from a **start room** to an **end room** through a network of interconnected rooms and tunnels. The challenge is to optimize the movement to achieve the minimum number of steps.
 
 ## Features
 - Parses a graph-based input representing rooms, tunnels, and ants.
-- Implements **BFS (Breadth-First Search)** and **max-flow algorithms** for pathfinding.
+- Implements **DFS Depth First Search**  for pathfinding.
 - Distributes ants across multiple paths for efficiency.
 - Outputs the movement of ants in the correct format.
 
@@ -19,7 +19,7 @@ Clone the repository:
 ## Usage
 Run the program and provide a valid map as input:
 ```sh
- go run main.go < maps/example.map
+ go run main.go  maps/example.map
 ```
 
 ## Input Format
@@ -54,5 +54,5 @@ GitHub: [onyango-granton](https://github.com/onyango-granton)
 LinkedIn: [Granton Onyango](https://www.linkedin.com/in/granton-onyango-298ba6213/)
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the [GNU_License](LICENSE).
 
